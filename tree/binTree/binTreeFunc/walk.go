@@ -1,5 +1,9 @@
 package binTreeFunc
 
+import (
+	"playground/stack/modle"
+)
+
 func PreOrderWalk(node *TreeNode, walkFunc func(node *TreeNode)) {
 	if node == nil {
 		return
@@ -75,7 +79,81 @@ func getNextLevelNode(nodes []*TreeNode) []*TreeNode {
 }
 
 
+func PreOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
+	if node == nil {
+		return
+	}
 
-//func PreOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
-//	stack := NewStack
-//}
+	stack := new(modle.Stack)
+	t := node
+
+	for t != nil || !stack.IsEmpty() {
+		for t != nil {
+			walkFunc(t)
+			stack.Push(t)
+			t = t.Left
+		}
+
+		if !stack.IsEmpty() {
+			v, _ := stack.Pop()
+			t = v.(*TreeNode)
+			t = t.Right
+		}
+	}
+	return
+}
+
+
+func MidOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
+	if node == nil {
+		return
+	}
+
+	stack := new(modle.Stack)
+	t := node
+
+	for t != nil || !stack.IsEmpty() {
+		for t != nil {
+			stack.Push(t)
+			t = t.Left
+		}
+
+		if !stack.IsEmpty() {
+			v, _ := stack.Pop()
+			t = v.(*TreeNode)
+			walkFunc(t)
+			t = t.Right
+		}
+	}
+	return
+}
+
+func PostOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
+	if node == nil {
+		return
+	}
+
+	stack:= new(modle.Stack)
+	walkedRightNodes := new(modle.Stack)
+	t := node
+
+	for t != nil || !stack.IsEmpty() {
+		for t != nil {
+			stack.Push(t)
+			t = t.Left
+		}
+
+		if !stack.IsEmpty() {
+			pre := stack.Top().(*TreeNode)
+			if pre.Right != nil && !walkedRightNodes.Exist(pre){
+				t = pre.Right
+				walkedRightNodes.Push(pre)
+			} else {
+				p, _ := stack.Pop()
+				t = p.(*TreeNode)
+				walkFunc(t)
+				t = nil
+			}
+		}
+	}
+}

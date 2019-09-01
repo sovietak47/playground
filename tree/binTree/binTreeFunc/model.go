@@ -2,6 +2,6 @@ package binTreeFunc
 
 type TreeNode struct {
 	Value interface{}
-	Left *TreeNode
+	Left  *TreeNode
 	Right *TreeNode
 }

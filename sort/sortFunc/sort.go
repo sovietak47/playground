@@ -1,10 +1,10 @@
 package sortFunc
 
 import (
-	"math/rand"
-	"time"
-	"strconv"
 	"math"
+	"math/rand"
+	"strconv"
+	"time"
 )
 
 func BubbleSort(li []int) {
@@ -95,7 +95,7 @@ func MergeSort(li []int, left, right int) {
 
 func merge(li []int, left, mid, right int) {
 	i := left
-	j := mid+1
+	j := mid + 1
 
 	tmp := []int{}
 
@@ -117,36 +117,35 @@ func merge(li []int, left, mid, right int) {
 		tmp = append(tmp, li[j:right+1]...)
 	}
 
-	for k:=0; k<len(tmp);k++{
+	for k := 0; k < len(tmp); k++ {
 		li[left+k] = tmp[k]
 	}
 }
 
 func Heapsort(li []int) {
-	for i:= len(li)/2 -1; i>=0; i--{
+	for i := len(li)/2 - 1; i >= 0; i-- {
 		heapShift(li, i, len(li)-1)
 	}
 
-	for j := len(li) -1; j >0; j-- {
-		li [j], li[0] =  li[0], li [j]
+	for j := len(li) - 1; j > 0; j-- {
+		li[j], li[0] = li[0], li[j]
 		heapShift(li, 0, j-1)
 	}
 }
 
-
-func heapShift(li []int, begin int, end int){
+func heapShift(li []int, begin int, end int) {
 	i := begin
-	j := 2*i +1
+	j := 2*i + 1
 
 	for j <= end {
-		if li[j+1] >= li[j] && j+1 <= end{
-			j = j+1
+		if li[j+1] >= li[j] && j+1 <= end {
+			j = j + 1
 		}
 
 		if li[j] >= li[i] {
 			li[i], li[j] = li[j], li[i]
 			i = j
-			j = 2*i +1
+			j = 2*i + 1
 		} else {
 			break
 		}
@@ -155,20 +154,20 @@ func heapShift(li []int, begin int, end int){
 
 func CountSort(li []int) {
 	max := li[0]
-	for i:= 0; i<len(li); i++ {
+	for i := 0; i < len(li); i++ {
 		if li[i] > max {
 			max = li[i]
 		}
 	}
 
 	counter := make([]int, max+1)
-	for j:=0; j<len(li); j++ {
+	for j := 0; j < len(li); j++ {
 		counter[li[j]]++
 	}
 
-	n :=0
+	n := 0
 	for k, v := range counter {
-		for m:=0; m<v; m++ {
+		for m := 0; m < v; m++ {
 			li[n] = k
 			n++
 		}
@@ -178,7 +177,7 @@ func CountSort(li []int) {
 func BucketSort(li []int, bucketNum int) {
 	max := li[0]
 	min := li[0]
-	for i:= 0; i<len(li); i++ {
+	for i := 0; i < len(li); i++ {
 		if li[i] > max {
 			max = li[i]
 		}
@@ -188,19 +187,19 @@ func BucketSort(li []int, bucketNum int) {
 	}
 
 	buckets := make([][]int, bucketNum)
-	for j:= 0; j<len(li); j++ {
-		index := (li[j] - min) / ((max - min) / (bucketNum -1) )
+	for j := 0; j < len(li); j++ {
+		index := (li[j] - min) / ((max - min) / (bucketNum - 1))
 		buckets[index] = append(buckets[index], li[j])
-	// 以插入排序为例
-		k:= len(buckets[index])-1-1
-		for k >=0 && buckets[index][k] > li[j] {
+		// 以插入排序为例
+		k := len(buckets[index]) - 1 - 1
+		for k >= 0 && buckets[index][k] > li[j] {
 			buckets[index][k+1] = buckets[index][k]
-			k --
+			k--
 		}
 		buckets[index][k+1] = li[j]
 	}
 
-	n :=0
+	n := 0
 	for _, v1 := range buckets {
 		for _, v2 := range v1 {
 			li[n] = v2
@@ -212,22 +211,22 @@ func BucketSort(li []int, bucketNum int) {
 
 func RadixSort(li []int) {
 	max := li[0]
-	for i:=0; i< len(li); i++ {
+	for i := 0; i < len(li); i++ {
 		if li[i] > max {
 			max = li[i]
 		}
 	}
 
-	for j:=0; j< len(strconv.Itoa(max)); j++ {
+	for j := 0; j < len(strconv.Itoa(max)); j++ {
 		buckets := make([][]int, 10)
-		for k:=0; k< len(li); k++ {
-			index := li[k]/int(math.Pow10(j))%10
+		for k := 0; k < len(li); k++ {
+			index := li[k] / int(math.Pow10(j)) % 10
 			buckets[index] = append(buckets[index], li[k])
 		}
 
 		m := 0
-		for _,v := range buckets {
-			for _,v2 := range v {
+		for _, v := range buckets {
+			for _, v2 := range v {
 				li[m] = v2
 				m++
 			}
