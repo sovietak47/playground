@@ -4,7 +4,7 @@ import (
 	"playground/stack/modle"
 )
 
-func PreOrderWalk(node *TreeNode, walkFunc func(node *TreeNode)) {
+func (node *TreeNode) PreOrderWalk(walkFunc func(node *TreeNode)) {
 	if node == nil {
 		return
 	}
@@ -13,39 +13,39 @@ func PreOrderWalk(node *TreeNode, walkFunc func(node *TreeNode)) {
 		walkFunc(node)
 	}
 
-	PreOrderWalk(node.Left, walkFunc)
-	PreOrderWalk(node.Right, walkFunc)
+	node.Left.PreOrderWalk(walkFunc)
+	node.Right.PreOrderWalk(walkFunc)
 }
 
-func MidOrderWalk(node *TreeNode, walkFunc func(node *TreeNode)) {
+func (node *TreeNode) MidOrderWalk(walkFunc func(node *TreeNode)) {
 	if node == nil {
 		return
 	}
 
-	MidOrderWalk(node.Left, walkFunc)
+	node.Left.MidOrderWalk(walkFunc)
 
 	if walkFunc != nil {
 		walkFunc(node)
 	}
 
-	MidOrderWalk(node.Right, walkFunc)
+	node.Right.MidOrderWalk(walkFunc)
 }
 
-func PostOrderWalk(node *TreeNode, walkFunc func(node *TreeNode)) {
+func (node *TreeNode) PostOrderWalk(walkFunc func(node *TreeNode)) {
 	if node == nil {
 		return
 	}
 
-	PostOrderWalk(node.Left, walkFunc)
-	PostOrderWalk(node.Right, walkFunc)
+	node.Left.PostOrderWalk(walkFunc)
+	node.Right.PostOrderWalk(walkFunc)
 
 	if walkFunc != nil {
 		walkFunc(node)
 	}
 }
 
-func LevelOrderWalk(root *TreeNode, walkFunc func(node *TreeNode)) {
-	levelWalk([]*TreeNode{root}, walkFunc)
+func (node *TreeNode) LevelOrderWalk(walkFunc func(node *TreeNode)) {
+	levelWalk([]*TreeNode{node}, walkFunc)
 }
 
 func levelWalk(nodes []*TreeNode, walkFunc func(node *TreeNode)) {
@@ -78,7 +78,6 @@ func getNextLevelNode(nodes []*TreeNode) []*TreeNode {
 	return ret
 }
 
-
 func PreOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
 	if node == nil {
 		return
@@ -102,7 +101,6 @@ func PreOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
 	}
 	return
 }
-
 
 func MidOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
 	if node == nil {
@@ -133,7 +131,7 @@ func PostOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
 		return
 	}
 
-	stack:= new(modle.Stack)
+	stack := new(modle.Stack)
 	walkedRightNodes := new(modle.Stack)
 	t := node
 
@@ -145,7 +143,7 @@ func PostOrderWalk2(node *TreeNode, walkFunc func(node *TreeNode)) {
 
 		if !stack.IsEmpty() {
 			pre := stack.Top().(*TreeNode)
-			if pre.Right != nil && !walkedRightNodes.Exist(pre){
+			if pre.Right != nil && !walkedRightNodes.Exist(pre) {
 				t = pre.Right
 				walkedRightNodes.Push(pre)
 			} else {

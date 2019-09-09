@@ -32,13 +32,13 @@ var printFunc = func(node *binTreeFunc.TreeNode) {
 func main() {
 	root := initBinTree()
 
-	binTreeFunc.PreOrderWalk(root, printFunc)
+	root.PreOrderWalk(printFunc)
 	fmt.Println()
-	binTreeFunc.MidOrderWalk(root, printFunc)
+	root.MidOrderWalk(printFunc)
 	fmt.Println()
-	binTreeFunc.PostOrderWalk(root, printFunc)
+	root.PostOrderWalk(printFunc)
 	fmt.Println()
-	binTreeFunc.LevelOrderWalk(root, printFunc)
+	root.LevelOrderWalk(printFunc)
 	fmt.Println()
 	fmt.Println()
 
@@ -47,4 +47,10 @@ func main() {
 	binTreeFunc.MidOrderWalk2(root, printFunc)
 	fmt.Println()
 	binTreeFunc.PostOrderWalk2(root, printFunc)
+	fmt.Println()
+	fmt.Println()
+
+	fmt.Println(root.Count())
+	fmt.Println(root.Height())
+	fmt.Println(root.IsEqual(root))
 }
